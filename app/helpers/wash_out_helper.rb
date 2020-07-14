@@ -25,10 +25,12 @@ module WashOutHelper
     end
   end
 
-  def wsdl_data(xml, params)
+  def wsdl_data(xml, params, wrap_response = true)
     params.each do |param|
       next if param.attribute?
 
+      return xml.text! param.value.to_s unless wrap_response == true
+      
       tag_name = param.name
       param_options = wsdl_data_options(param)
       param_options.merge! wsdl_data_attrs(param)
